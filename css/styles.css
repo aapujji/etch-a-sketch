@@ -1,13 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+body {
+    font-family: 'Quicksand', sans-serif;
+}
+
+input {
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 6px 0;
+    width: 48px;
+}
+
 #header {
     display: flex;
     justify-content: end;
     padding: 16px 16px 36px;
+    position: relative;
 }
 
 #header > button {
@@ -44,7 +58,22 @@
 }
 
 .settings {
+    width: 200px;
     display: none;
+    position: absolute;
+    right: 16px;
+    bottom: -48px;
+    padding: 24px;
+    background-color: #fff;
+    outline: 1px solid #d3d3d3;
+    border-radius: 6px;
+}
+
+.setting {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .show {
