@@ -5,30 +5,31 @@ const clearGrid = () => {
     });
 }
 
-const clearSquare = (square) => {
-    square.classList.remove("hover");
-}
-
-const addSquare = (square) => {
-    square.classList.add("hover");
+const toggleSquare = (square) => {
+    square.classList.toggle("hover");
 }
 
 const buildGrid = (num = 32) => {
-    console.log(num);
     const container = document.querySelector("#container");
     container.replaceChildren();
     const gridSize = num * num;
+
     for (let i = 0; i < gridSize; i++) {
         const square = document.createElement("div");
         square.classList.add("square");
+
         const flexBasis = Math.round((600 / num) * 100) / 100;
         const height = Math.round((600 / num) * 100) / 100;
-
         square.style.flexBasis = `${flexBasis.toString()}px`;
         square.style.height = `${height.toString()}px`;
 
-        square.addEventListener("mouseenter", (ev) => addSquare(ev.target));
-        square.addEventListener("click", (ev) => clearSquare(ev.target));
+        square.addEventListener("mousedown", (ev) => {
+            toggleSquare(ev.target);
+        });
+
+        square.addEventListener("mouseover", (ev) => {
+            if (isMouseDown) toggleSquare(ev.target);
+        });
 
         container.appendChild(square);
     }
@@ -53,6 +54,14 @@ const showSettings = () => {
 const button = document.querySelector("button");
 button.addEventListener("click", () => {
     showSettings();
+});
+
+let isMouseDown = false;
+document.addEventListener("mousedown", () => {
+    isMouseDown = true;
+});
+document.addEventListener("mouseup", () => {
+    isMouseDown = false;
 });
 
 buildGrid();
