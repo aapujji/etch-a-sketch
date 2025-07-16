@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
 
+:root {
+    --white: #ffffff;
+    --black: #000000;
+    --lightgrey: #d3d3d3;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -13,7 +19,7 @@ body {
 input,
 button {
     font-family: 'Quicksand', sans-serif;
-    border: 1px solid black;
+    border: 1px solid var(--black);
     border-radius: 4px;
     padding: 6px;
     width: 48px;
@@ -36,7 +42,7 @@ button {
     border: 0;
     width: 36px;
     height: 36px;
-    outline: 1px solid #d3d3d3;
+    outline: 1px solid var(--lightgrey);
     cursor: pointer;
 }
 
@@ -54,10 +60,10 @@ button {
 }
 
 .square {
-    outline: 1px solid #d3d3d3;
+    outline: 1px solid var(--lightgrey);
     flex-shrink: 0;
     flex-grow: 1;
-    background-color: #fff;
+    background-color: var(--white);
 }
 
 .fill {
@@ -69,11 +75,11 @@ button {
     width: 200px;
     display: none;
     position: absolute;
-    right: 16px;
-    bottom: -80px;
+    right: 8px;
+    top: 62px;
     padding: 24px;
-    background-color: #fff;
-    outline: 1px solid #d3d3d3;
+    background-color: --var(--white);
+    outline: 1px solid var(--lightgrey);
     border-radius: 6px;
 }
 
@@ -86,6 +92,9 @@ button {
 
 #save-btn {
     width: 100%;
+    margin-top: 16px;
+    background: var(--white);
+    font-weight: 600;
 }
 
 .show {
