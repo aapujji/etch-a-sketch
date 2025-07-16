@@ -17,29 +17,14 @@ const buildGrid = (num) => {
     const container = document.querySelector("#container");
     container.replaceChildren();
     const gridSize = num * num;
-    const width = container.offsetWidth;
-    const flexBasis = Math.round((width / num) * 100) / 100;
-    const height = Math.round((width / num) * 100) / 100;
+    const squareSize = Math.round((container.offsetWidth / num) * 100) / 100;
 
     for (let i = 0; i < gridSize; i++) {
         const square = document.createElement("div");
         square.classList.add("square");
-
-        square.style.flexBasis = `${flexBasis.toString()}px`;
-        square.style.height = `${height.toString()}px`;
-
+        square.style.flexBasis = `${squareSize}px`;
+        square.style.height = `${squareSize}px`;
         container.appendChild(square);
-    }
-};
-
-const getGridSize = () => {
-    let numberOfSquares = prompt("Enter number of squares per row:");  
-    const MAX_SQUARES = 100;
-
-    if (numberOfSquares > MAX_SQUARES) {
-        alert("Enter a number less than or equal to 100");
-    } else {
-        buildGrid(numberOfSquares);
     }
 };
 
@@ -54,28 +39,19 @@ const init = () => {
     const saveButton = document.querySelector("#save-btn");
 
     let isMouseDown = false;
-    document.addEventListener("mousedown", (ev) => {
-        isMouseDown = true;
-    });
-    document.addEventListener("mouseup", () => {
-        isMouseDown = false;
-    });
+    document.addEventListener("mousedown", () => isMouseDown = true );
+    document.addEventListener("mouseup", () => isMouseDown = false );
 
     const header = document.querySelector("#header");
     header.addEventListener("click", (ev) => {
         const id = ev.target.id;
-        switch(id) {
-            case "edit-btn":
-                toggleSettingsModal();
-                break;
-            case "clear-btn":
-                clearGrid();
-                break;
-            }
+        if (id === "edit-btn") toggleSettingsModal();
+        else if (id === "clear-btn") clearGrid();
     });
 
     saveButton.addEventListener("click", () => {
-        let newGridSize = document.querySelector("#grid-size-input").value;
+        const input = document.querySelector("#grid-size-input").value;
+        let newGridSize = parseInt(input, 10);
         if (newGridSize !== currentGridSize && Number(newGridSize) && newGridSize > 0) {
             newGridSize = newGridSize <= 100 ? newGridSize : 100;
             buildGrid(newGridSize);
@@ -86,7 +62,6 @@ const init = () => {
 
     buildGrid(currentGridSize);
 
-    const squares = document.querySelector("#container");
     container.addEventListener("mousedown", (ev) => {
         fillSquare(ev.target);
     })
