@@ -84,6 +84,10 @@ button {
     justify-content: space-between;
 }
 
+#save-btn {
+    width: 100%;
+}
+
 .show {
     display: block;
 }

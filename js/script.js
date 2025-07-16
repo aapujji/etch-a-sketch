@@ -67,8 +67,10 @@ const init = () => {
         switch(id) {
             case "edit-btn":
                 toggleSettingsModal();
+                break;
             case "clear-btn":
                 clearGrid();
+                break;
             }
     });
 
