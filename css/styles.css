@@ -10,15 +10,22 @@ body {
     font-family: 'Quicksand', sans-serif;
 }
 
-input {
+input,
+button {
+    font-family: 'Quicksand', sans-serif;
     border: 1px solid black;
     border-radius: 4px;
-    padding: 6px 0;
+    padding: 6px;
     width: 48px;
+}
+
+button {
+    cursor: pointer;
 }
 
 #header {
     display: flex;
+    gap: 10px;
     justify-content: end;
     padding: 16px 16px 36px;
     position: relative;
@@ -34,8 +41,8 @@ input {
 }
 
 #header > button > img {
-    width: 26px;
-    padding: 5px 5px 0;
+    height: 26px;
+    padding: 5px;
 }
 
 #container {
@@ -54,6 +61,7 @@ input {
 }
 
 .hover {
+    outline: 1px solid transparent;
     background-color: transparent;
 }
 
@@ -62,7 +70,7 @@ input {
     display: none;
     position: absolute;
     right: 16px;
-    bottom: -48px;
+    bottom: -80px;
     padding: 24px;
     background-color: #fff;
     outline: 1px solid #d3d3d3;
@@ -76,6 +84,24 @@ input {
     justify-content: space-between;
 }
 
+#save-btn {
+    width: 100%;
+}
+
 .show {
     display: block;
+}
+
+#edit-btn:before,
+#clear-btn:before {
+    display: block;
+    padding: 5px;
+}
+
+#edit-btn:before {
+    content: url("../images/gear.svg");
+}
+
+#clear-btn:before {
+    content: url("../images/trash-can.svg");
 }
