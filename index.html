@@ -8,12 +8,14 @@
 </head>
 <body>
     <div id="header">
-        <button type="button"><img src="./images/gear.svg" alt="Edit" /></button>
+        <button id="clear-btn" type="button"></button>
+        <button id="edit-btn" type="button"></button>
         <div id="settings" class="settings">
             <div class="setting grid-size">
                 <label>Grid Size</label>
-                <input type="text">
+                <input id="grid-size-input" class="input" type="text" value="32">
             </div>
+            <button id="save-btn" type="button">Save</button>
         </div>
     </div>
     <div id="container"></div>

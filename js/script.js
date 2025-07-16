@@ -1,35 +1,32 @@
+const clearSquare = (square) => {
+    square.classList.remove("hover");
+}
+
 const clearGrid = () => {
     const squares = document.querySelectorAll(".square");
     squares.forEach((square) => {
-        square.classList.remove("hover");
+        clearSquare(square);
     });
 }
 
-const toggleSquare = (square) => {
-    square.classList.toggle("hover");
+const fillSquare = (square) => {
+    square.classList.add("hover");
 }
 
-const buildGrid = (num = 32) => {
+const buildGrid = (num) => {
     const container = document.querySelector("#container");
     container.replaceChildren();
     const gridSize = num * num;
+    const width = container.offsetWidth;
+    const flexBasis = Math.round((width / num) * 100) / 100;
+    const height = Math.round((width / num) * 100) / 100;
 
     for (let i = 0; i < gridSize; i++) {
         const square = document.createElement("div");
         square.classList.add("square");
 
-        const flexBasis = Math.round((600 / num) * 100) / 100;
-        const height = Math.round((600 / num) * 100) / 100;
         square.style.flexBasis = `${flexBasis.toString()}px`;
         square.style.height = `${height.toString()}px`;
-
-        square.addEventListener("mousedown", (ev) => {
-            toggleSquare(ev.target);
-        });
-
-        square.addEventListener("mouseover", (ev) => {
-            if (isMouseDown) toggleSquare(ev.target);
-        });
 
         container.appendChild(square);
     }
@@ -46,22 +43,57 @@ const getGridSize = () => {
     }
 };
 
-const showSettings = () => {
+const toggleSettingsModal = () => {
     const settings = document.querySelector("#settings");
     settings.classList.toggle("show");
+};
+
+const init = () => {
+    let currentGridSize = 32;
+    const MAX_SQUARES = 100;
+    const saveButton = document.querySelector("#save-btn");
+
+    let isMouseDown = false;
+    document.addEventListener("mousedown", (ev) => {
+        isMouseDown = true;
+    });
+    document.addEventListener("mouseup", () => {
+        isMouseDown = false;
+    });
+
+    const header = document.querySelector("#header");
+    header.addEventListener("click", (ev) => {
+        const id = ev.target.id;
+        switch(id) {
+            case "edit-btn":
+                toggleSettingsModal();
+            case "clear-btn":
+                clearGrid();
+            }
+    });
+
+    saveButton.addEventListener("click", () => {
+        let newGridSize = document.querySelector("#grid-size-input").value;
+        if (newGridSize !== currentGridSize && Number(newGridSize) && newGridSize > 0) {
+            newGridSize = newGridSize <= 100 ? newGridSize : 100;
+            buildGrid(newGridSize);
+            currentGridSize = newGridSize;
+        }
+        toggleSettingsModal();
+    });
+
+    buildGrid(currentGridSize);
+
+    const squares = document.querySelector("#container");
+    container.addEventListener("mousedown", (ev) => {
+        fillSquare(ev.target);
+    })
+    container.addEventListener("mouseover", (ev) => {
+        if (isMouseDown) fillSquare(ev.target);
+    });
+    container.addEventListener("click", (ev) => {
+        clearSquare(ev.target);
+    });
 }
 
-const button = document.querySelector("button");
-button.addEventListener("click", () => {
-    showSettings();
-});
-
-let isMouseDown = false;
-document.addEventListener("mousedown", () => {
-    isMouseDown = true;
-});
-document.addEventListener("mouseup", () => {
-    isMouseDown = false;
-});
-
-buildGrid();
+init();
