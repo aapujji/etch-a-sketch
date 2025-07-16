@@ -1,14 +1,6 @@
-const clearSquare = (square) => {
-    square.classList.remove("hover");
-}
-
 const clearGrid = () => {
     const squares = document.querySelectorAll(".square");
-    squares.forEach((square) => clearSquare(square));
-}
-
-const fillSquare = (square) => {
-    square.classList.add("hover");
+    squares.forEach((square) => square.classList.remove("fill"));
 }
 
 const buildGrid = (num) => {
@@ -22,6 +14,7 @@ const buildGrid = (num) => {
         square.classList.add("square");
         square.style.flexBasis = `${squareSize}px`;
         square.style.height = `${squareSize}px`;
+        square.setAttribute("tabindex", "0");
         container.appendChild(square);
     }
 };
@@ -60,11 +53,15 @@ const init = () => {
 
     buildGrid(currentGridSize);
 
-    container.addEventListener("mousedown", (ev) => fillSquare(ev.target));
+    container.addEventListener("mousedown", (ev) => ev.target.classList.toggle("fill"));
     container.addEventListener("mouseover", (ev) => {
-        if (isMouseDown) fillSquare(ev.target);
+        if (isMouseDown) ev.target.classList.add("fill");
     });
-    container.addEventListener("click", (ev) => clearSquare(ev.target));
+    container.addEventListener("keydown", (ev) => {
+    if (ev.key === "Enter" || ev.key === " ") {
+        ev.target.classList.toggle("fill");
+    }
+});
 }
 
 init();
