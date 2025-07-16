@@ -1,45 +1,21 @@
-const clearSquare = (square) => {
-    square.classList.remove("hover");
-}
-
 const clearGrid = () => {
     const squares = document.querySelectorAll(".square");
-    squares.forEach((square) => {
-        clearSquare(square);
-    });
-}
-
-const fillSquare = (square) => {
-    square.classList.add("hover");
+    squares.forEach((square) => square.classList.remove("fill"));
 }
 
 const buildGrid = (num) => {
     const container = document.querySelector("#container");
     container.replaceChildren();
     const gridSize = num * num;
-    const width = container.offsetWidth;
-    const flexBasis = Math.round((width / num) * 100) / 100;
-    const height = Math.round((width / num) * 100) / 100;
+    const squareSize = Math.round((container.offsetWidth / num) * 100) / 100;
 
     for (let i = 0; i < gridSize; i++) {
         const square = document.createElement("div");
         square.classList.add("square");
-
-        square.style.flexBasis = `${flexBasis.toString()}px`;
-        square.style.height = `${height.toString()}px`;
-
+        square.style.flexBasis = `${squareSize}px`;
+        square.style.height = `${squareSize}px`;
+        square.setAttribute("tabindex", "0");
         container.appendChild(square);
-    }
-};
-
-const getGridSize = () => {
-    let numberOfSquares = prompt("Enter number of squares per row:");  
-    const MAX_SQUARES = 100;
-
-    if (numberOfSquares > MAX_SQUARES) {
-        alert("Enter a number less than or equal to 100");
-    } else {
-        buildGrid(numberOfSquares);
     }
 };
 
@@ -48,54 +24,51 @@ const toggleSettingsModal = () => {
     settings.classList.toggle("show");
 };
 
+const saveSettings = (currentGridSize) => {
+    const sizeInput = document.querySelector("#grid-size-input");
+    let newGridSize = parseInt(sizeInput.value, 10);
+    if (newGridSize !== currentGridSize && Number(newGridSize) && newGridSize > 0) {
+        newGridSize = newGridSize <= 100 ? newGridSize : 100;
+        buildGrid(newGridSize);
+        currentGridSize = newGridSize;
+    }
+
+    toggleSettingsModal();
+}
+
 const init = () => {
     let currentGridSize = 32;
     const MAX_SQUARES = 100;
     const saveButton = document.querySelector("#save-btn");
 
     let isMouseDown = false;
-    document.addEventListener("mousedown", (ev) => {
-        isMouseDown = true;
+    document.addEventListener("mousedown", (ev) => { 
+        if (ev.button === 0) isMouseDown = true;
     });
-    document.addEventListener("mouseup", () => {
-        isMouseDown = false;
-    });
+    document.addEventListener("mouseup", () => isMouseDown = false );
 
     const header = document.querySelector("#header");
     header.addEventListener("click", (ev) => {
         const id = ev.target.id;
-        switch(id) {
-            case "edit-btn":
-                toggleSettingsModal();
-                break;
-            case "clear-btn":
-                clearGrid();
-                break;
-            }
+        if (id === "edit-btn") toggleSettingsModal();
+        else if (id === "clear-btn") clearGrid();
     });
 
-    saveButton.addEventListener("click", () => {
-        let newGridSize = document.querySelector("#grid-size-input").value;
-        if (newGridSize !== currentGridSize && Number(newGridSize) && newGridSize > 0) {
-            newGridSize = newGridSize <= 100 ? newGridSize : 100;
-            buildGrid(newGridSize);
-            currentGridSize = newGridSize;
-        }
-        toggleSettingsModal();
-    });
+    saveButton.addEventListener("click", () => saveSettings(currentGridSize));
 
     buildGrid(currentGridSize);
 
-    const squares = document.querySelector("#container");
     container.addEventListener("mousedown", (ev) => {
-        fillSquare(ev.target);
-    })
+        if (ev.button === 0) ev.target.classList.toggle("fill")
+    });
     container.addEventListener("mouseover", (ev) => {
-        if (isMouseDown) fillSquare(ev.target);
+        if (isMouseDown) ev.target.classList.add("fill");
     });
-    container.addEventListener("click", (ev) => {
-        clearSquare(ev.target);
-    });
+    container.addEventListener("keydown", (ev) => {
+    if (ev.key === "Enter" || ev.key === " ") {
+        ev.target.classList.toggle("fill");
+    }
+});
 }
 
 init();
