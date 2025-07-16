@@ -4,9 +4,7 @@ const clearSquare = (square) => {
 
 const clearGrid = () => {
     const squares = document.querySelectorAll(".square");
-    squares.forEach((square) => {
-        clearSquare(square);
-    });
+    squares.forEach((square) => clearSquare(square));
 }
 
 const fillSquare = (square) => {
@@ -62,15 +60,11 @@ const init = () => {
 
     buildGrid(currentGridSize);
 
-    container.addEventListener("mousedown", (ev) => {
-        fillSquare(ev.target);
-    })
+    container.addEventListener("mousedown", (ev) => fillSquare(ev.target));
     container.addEventListener("mouseover", (ev) => {
         if (isMouseDown) fillSquare(ev.target);
     });
-    container.addEventListener("click", (ev) => {
-        clearSquare(ev.target);
-    });
+    container.addEventListener("click", (ev) => clearSquare(ev.target));
 }
 
 init();
