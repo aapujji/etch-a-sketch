@@ -12,7 +12,7 @@ A web version of the classic Etch-a-sketch toy. This project was built using HTM
 
 ## Links
 
-Live preview:
+Live preview: https://aapujji.github.io/etch-a-sketch/
 
 ## Install
 
