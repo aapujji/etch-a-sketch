@@ -4,7 +4,7 @@
 
 - [Overview](#overview)
     - [Links](#links)
-    - [Install] (#install)
+    - [Install](#install)
 
 ## Overview
 
