@@ -59,10 +59,12 @@ button {
     background: linear-gradient(#2A7B9B, #57C785, #EDDD53);
 }
 
-.square {
+.cell {
     outline: 1px solid var(--lightgrey);
     flex-shrink: 0;
     flex-grow: 1;
+    border: 0;
+    border-radius: 0;
     background-color: var(--white);
 }
 
